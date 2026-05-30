@@ -37,10 +37,16 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 
+function isValidGalleryImageSrc(src) {
+  return typeof src === 'string' && /^img\/[A-Za-z0-9._-]+\.(?:jpe?g|png|webp|gif)$/i.test(src);
+}
+
 document.querySelectorAll('.gallery-item').forEach(item => {
   item.addEventListener('click', () => {
     const full = item.getAttribute('data-full');
-    const alt = item.querySelector('img').getAttribute('alt');
+    const alt = item.querySelector('img').getAttribute('alt') || 'Imagem da galeria';
+    if (!isValidGalleryImageSrc(full)) return;
+
     lightboxImg.src = full;
     lightboxImg.alt = alt;
     lightbox.classList.add('open');
