@@ -50,7 +50,7 @@ function isValidGalleryImageSrc(src) {
 document.querySelectorAll('.gallery-item').forEach(item => {
   item.addEventListener('click', () => {
     const imgEl = item.querySelector('img');
-    const full = item.getAttribute('data-full') || imgEl.src;
+    const full = imgEl.src;
     const alt = imgEl.getAttribute('alt') || 'Imagem da galeria';
     if (!isValidGalleryImageSrc(full)) return;
 
