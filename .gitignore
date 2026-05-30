@@ -14,7 +14,15 @@ Thumbs.db
 # Environment and secret files
 .env
 .env.*
+.env.local
 *.local
+*.key
+*.pem
+*.p12
+*.jks
+*.crt
+*.asc
+*.gpg
 
 # Dependency directories
 node_modules/
