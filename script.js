@@ -38,13 +38,20 @@ const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 
 function isValidGalleryImageSrc(src) {
-  return typeof src === 'string' && /^img\/[A-Za-z0-9._-]+\.(?:jpe?g|png|webp|gif)$/i.test(src);
+  if (typeof src !== 'string') return false;
+  try {
+    const url = new URL(src, window.location.href);
+    return url.origin === window.location.origin && /^\/img\/[A-Za-z0-9._-]+\.(?:jpe?g|png|webp|gif)$/i.test(url.pathname);
+  } catch {
+    return false;
+  }
 }
 
 document.querySelectorAll('.gallery-item').forEach(item => {
   item.addEventListener('click', () => {
-    const full = item.getAttribute('data-full');
-    const alt = item.querySelector('img').getAttribute('alt') || 'Imagem da galeria';
+    const imgEl = item.querySelector('img');
+    const full = item.getAttribute('data-full') || imgEl.src;
+    const alt = imgEl.getAttribute('alt') || 'Imagem da galeria';
     if (!isValidGalleryImageSrc(full)) return;
 
     lightboxImg.src = full;
