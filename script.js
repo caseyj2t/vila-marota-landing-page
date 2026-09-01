@@ -83,7 +83,7 @@ const translations = {
     addressLine: 'Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300',
     ctaTitle: 'Come visit Marota',
     ctaDescription: 'A simple and welcoming corner in the interior of Bahia, waiting for you. Get in touch or come visit us.',
-    mapButton: '🗺️ View on Google Maps',
+    mapButton: 'View on Google Maps',
     footerLocation: 'Pindobaçu — Bahia, Brazil',
     footerCopyright: '© 2026 Marota community. Made with <span class="heart">♥</span> for our village.',
   },
