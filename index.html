@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; block-all-mixed-content;" />
   <meta name="description" content="Marota - Um simples povoado no interior do nordeste da Bahia. Conheça Pindobaçu-BA." />
   <link rel="icon" type="image/x-icon" href="img/logomarota.ico">
@@ -22,7 +22,7 @@
         <span class="brand-icon"></span>
         <span>Marota</span>
       </a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menu de navegação" aria-controls="navLinks" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
       <div class="lang-switcher">
@@ -130,28 +130,37 @@
 
       <div class="gallery-grid reveal">
         <div class="gallery-item big" data-full="img/marota3.JPG">
-          <img src="img/marota3.JPG" alt="Marota imagem 1" data-i18n-alt="galleryAlt1">
+          <img src="img/marota3.JPG" alt="Marota imagem 1" data-i18n-alt="galleryAlt1" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption1">Vista da Vila Marota</span>
         </div>
         <div class="gallery-item" data-full="img/marota2.jpg">
-          <img src="img/marota2.jpg" alt="Marota imagem 2" data-i18n-alt="galleryAlt2">
+          <img src="img/marota2.jpg" alt="Marota imagem 2" data-i18n-alt="galleryAlt2" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption2">Ruas da comunidade</span>
         </div>
         <div class="gallery-item tall" data-full="img/marota1.jpg">
-          <img src="img/marota1.jpg" alt="Marota imagem 3" data-i18n-alt="galleryAlt3">
+          <img src="img/marota1.jpg" alt="Marota imagem 3" data-i18n-alt="galleryAlt3" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption3">Paisagem local</span>
         </div>
         <div class="gallery-item" data-full="img/marota4.JPG">
-          <img src="img/marota4.JPG" alt="Marota imagem 4" data-i18n-alt="galleryAlt4">
+          <img src="img/marota4.JPG" alt="Marota imagem 4" data-i18n-alt="galleryAlt4" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption4">Vida cotidiana</span>
         </div>
         <div class="gallery-item wide" data-full="img/marota5.JPG">
-          <img src="img/marota5.JPG" alt="Marota imagem 5" data-i18n-alt="galleryAlt5">
+          <img src="img/marota5.JPG" alt="Marota imagem 5" data-i18n-alt="galleryAlt5" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption5">Natureza e horizonte</span>
         </div>
         <div class="gallery-item" data-full="img/marota6.JPG">
-          <img src="img/marota6.JPG" alt="Marota imagem 6" data-i18n-alt="galleryAlt6">
+          <img src="img/marota6.JPG" alt="Marota imagem 6" data-i18n-alt="galleryAlt6" loading="lazy" decoding="async">
           <span class="caption" data-i18n="galleryCaption6">Charme do interior</span>
+        </div>
+        <div class="gallery-item gallery-placeholder">
+          <span data-i18n="galleryComingSoon">Imagem em breve</span>
+        </div>
+        <div class="gallery-item gallery-placeholder">
+          <span data-i18n="galleryComingSoon">Imagem em breve</span>
+        </div>
+        <div class="gallery-item gallery-placeholder">
+          <span data-i18n="galleryComingSoon">Imagem em breve</span>
         </div>
       </div>
     </div>
@@ -169,18 +178,40 @@
       <div class="section-title reveal">
         <span class="eyebrow" data-i18n="infoEyebrow">Informações úteis</span>
         <h2 data-i18n="infoTitle">Como nos encontrar</h2>
+        <p data-i18n="infoDescription">Confira o endereço e abra a rota para chegar à comunidade de Marota.</p>
       </div>
 
       <div class="info-grid">
-        <div class="info-card reveal">
-          <div class="info-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
+        <div class="info-card location-card reveal">
+          <div class="location-details">
+            <div class="info-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <h3 data-i18n="addressTitle">Endereço</h3>
+            <p class="location-address" data-copy-address="Rua Itiúba, 1 - Marota, Pindobaçu - BA, 44774-300">
+              Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300
+            </p>
+            <p class="location-region" data-i18n="locationRegion">Povoado de Marota · Pindobaçu, Bahia, Brasil</p>
+            <div class="location-coordinates">
+              <span data-i18n="coordinatesLabel">Coordenadas</span>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=-10.7447334%2C-40.4473127" target="_blank" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin">
+                -10.7447334, -40.4473127
+              </a>
+            </div>
           </div>
-          <h4 data-i18n="addressTitle">Endereço</h4>
-          <p data-i18n="addressLine">Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300</p>
+          <div class="location-actions">
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=-10.7447334%2C-40.4473127" target="_blank" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin" class="btn btn-primary">
+              <span data-i18n="directionsButton">Abrir rota no Google Maps</span>
+            </a>
+            <button class="btn btn-outline" id="copyAddress" type="button" data-i18n="copyAddressButton">
+              Copiar endereço
+            </button>
+            <span class="copy-address-status" id="copyAddressStatus" role="status" aria-live="polite"></span>
+            <p class="location-note" data-i18n="directionsNote">O trajeto pode variar conforme o ponto de partida e as condições das vias.</p>
+          </div>
         </div>
       </div>
     </div>

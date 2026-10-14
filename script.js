@@ -33,10 +33,18 @@ const translations = {
     galleryAlt4: 'Marota imagem 4',
     galleryAlt5: 'Marota imagem 5',
     galleryAlt6: 'Marota imagem 6',
+    galleryComingSoon: 'Imagem em breve',
     infoEyebrow: 'Informações úteis',
     infoTitle: 'Como nos encontrar',
+    infoDescription: 'Confira o endereço e abra a rota para chegar à comunidade de Marota.',
     addressTitle: 'Endereço',
-    addressLine: 'Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300',
+    locationRegion: 'Povoado de Marota · Pindobaçu, Bahia, Brasil',
+    coordinatesLabel: 'Coordenadas',
+    directionsButton: 'Abrir rota no Google Maps',
+    copyAddressButton: 'Copiar endereço',
+    addressCopied: 'Endereço copiado.',
+    copyAddressError: 'Não foi possível copiar. Selecione e copie o endereço manualmente.',
+    directionsNote: 'O trajeto pode variar conforme o ponto de partida e as condições das vias.',
     ctaTitle: 'Venha conhecer a Marota',
     ctaDescription: 'Um cantinho simples e acolhedor no interior da Bahia, esperando por você. Entre em contato ou venha nos visitar.',
     mapButton: 'Ver no Google Maps',
@@ -77,10 +85,18 @@ const translations = {
     galleryAlt4: 'Marota image 4',
     galleryAlt5: 'Marota image 5',
     galleryAlt6: 'Marota image 6',
+    galleryComingSoon: 'Image coming soon',
     infoEyebrow: 'Useful information',
     infoTitle: 'How to find us',
+    infoDescription: 'Check the address and open directions to the Marota community.',
     addressTitle: 'Address',
-    addressLine: 'Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300',
+    locationRegion: 'Marota village · Pindobaçu, Bahia, Brazil',
+    coordinatesLabel: 'Coordinates',
+    directionsButton: 'Get directions on Google Maps',
+    copyAddressButton: 'Copy address',
+    addressCopied: 'Address copied.',
+    copyAddressError: 'Could not copy. Please select and copy the address manually.',
+    directionsNote: 'Your route may vary depending on your starting point and road conditions.',
     ctaTitle: 'Come visit Marota',
     ctaDescription: 'A simple and welcoming corner in the interior of Bahia, waiting for you. Get in touch or come visit us.',
     mapButton: 'View on Google Maps',
@@ -121,10 +137,18 @@ const translations = {
     galleryAlt4: 'Imagen de Marota 4',
     galleryAlt5: 'Imagen de Marota 5',
     galleryAlt6: 'Imagen de Marota 6',
+    galleryComingSoon: 'Imagen próximamente',
     infoEyebrow: 'Información útil',
     infoTitle: 'Cómo encontrarnos',
+    infoDescription: 'Consulta la dirección y abre la ruta para llegar a la comunidad de Marota.',
     addressTitle: 'Dirección',
-    addressLine: 'Rua Itiúba, 1 — Marota,<br>Pindobaçu — BA, 44774-300',
+    locationRegion: 'Pueblo de Marota · Pindobaçu, Bahía, Brasil',
+    coordinatesLabel: 'Coordenadas',
+    directionsButton: 'Abrir ruta en Google Maps',
+    copyAddressButton: 'Copiar dirección',
+    addressCopied: 'Dirección copiada.',
+    copyAddressError: 'No se pudo copiar. Selecciona y copia la dirección manualmente.',
+    directionsNote: 'La ruta puede variar según el punto de partida y las condiciones de las vías.',
     ctaTitle: 'Ven a conocer Marota',
     ctaDescription: 'Un rincón simple y acogedor en el interior de Bahía, esperando por ti. Contáctanos o ven a visitarnos.',
     mapButton: 'Ver en Google Maps',
@@ -158,19 +182,72 @@ if (langSelect) {
 }
 applyLanguage(savedLang);
 
+const copyAddressButton = document.getElementById('copyAddress');
+const copyAddressStatus = document.getElementById('copyAddressStatus');
+
+if (langSelect) {
+  langSelect.addEventListener('change', () => {
+    copyAddressStatus.textContent = '';
+  });
+}
+
+function copyTextFallback(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.setAttribute('readonly', '');
+  textArea.style.position = 'fixed';
+  textArea.style.opacity = '0';
+  document.body.appendChild(textArea);
+  let copied;
+  try {
+    textArea.select();
+    copied = document.execCommand('copy');
+  } finally {
+    textArea.remove();
+  }
+  if (!copied) throw new Error('Clipboard copy command was rejected.');
+}
+
+copyAddressButton.addEventListener('click', async () => {
+  const address = document.querySelector('[data-copy-address]').dataset.copyAddress;
+  const language = langSelect ? langSelect.value : 'pt';
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(address);
+    } else {
+      copyTextFallback(address);
+    }
+    copyAddressStatus.textContent = translations[language].addressCopied;
+  } catch (error) {
+    copyAddressStatus.textContent = translations[language].copyAddressError;
+    console.error('Não foi possível copiar o endereço.', error);
+  }
+});
+
 // Mobile menu toggle
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 menuToggle.addEventListener('click', () => {
-  menuToggle.classList.toggle('active');
-  navLinks.classList.toggle('open');
+  const isOpen = menuToggle.classList.toggle('active');
+  navLinks.classList.toggle('open', isOpen);
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
 });
 // Close menu after click on link (mobile)
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     menuToggle.classList.remove('active');
     navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
   });
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+    menuToggle.classList.remove('active');
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.focus();
+  }
 });
 
 // Navbar shadow on scroll
@@ -207,7 +284,7 @@ function isValidGalleryImageSrc(src) {
   }
 }
 
-document.querySelectorAll('.gallery-item').forEach(item => {
+document.querySelectorAll('.gallery-item:not(.gallery-placeholder)').forEach(item => {
   item.addEventListener('click', () => {
     const imgEl = item.querySelector('img');
     const full = imgEl.src;
