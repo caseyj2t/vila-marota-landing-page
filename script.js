@@ -36,7 +36,30 @@ const translations = {
     galleryComingSoon: 'Imagem em breve',
     infoEyebrow: 'Informações úteis',
     infoTitle: 'Como nos encontrar',
-    infoDescription: 'Confira o endereço e abra a rota para chegar à comunidade de Marota.',
+    infoDescription: 'Confira o endereço, a rota e o clima atual da comunidade de Marota.',
+    weatherTitle: 'Clima atual',
+    weatherCity: 'Marota, Pindobaçu',
+    weatherFeels: 'Sensação',
+    weatherHumidity: 'Umidade',
+    weatherLoading: 'Consultando o clima...',
+    weatherError: 'Não foi possível carregar o clima agora.',
+    weatherCredit: 'Dados por <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>',
+    weatherClear: 'Céu limpo',
+    weatherMostlyClear: 'Predominantemente limpo',
+    weatherPartlyCloudy: 'Parcialmente nublado',
+    weatherOvercast: 'Nublado',
+    weatherFog: 'Neblina',
+    weatherDrizzle: 'Garoa',
+    weatherFreezingDrizzle: 'Garoa congelante',
+    weatherRain: 'Chuva',
+    weatherFreezingRain: 'Chuva congelante',
+    weatherSnow: 'Neve',
+    weatherSnowGrains: 'Grãos de neve',
+    weatherShowers: 'Pancadas de chuva',
+    weatherSnowShowers: 'Pancadas de neve',
+    weatherThunderstorm: 'Trovoada',
+    weatherThunderstormHail: 'Trovoada com granizo',
+    weatherUnknown: 'Condição indisponível',
     addressTitle: 'Endereço',
     locationRegion: 'Povoado de Marota · Pindobaçu, Bahia, Brasil',
     coordinatesLabel: 'Coordenadas',
@@ -88,7 +111,30 @@ const translations = {
     galleryComingSoon: 'Image coming soon',
     infoEyebrow: 'Useful information',
     infoTitle: 'How to find us',
-    infoDescription: 'Check the address and open directions to the Marota community.',
+    infoDescription: 'Check the address, directions, and current weather in the Marota community.',
+    weatherTitle: 'Current weather',
+    weatherCity: 'Marota, Pindobaçu',
+    weatherFeels: 'Feels like',
+    weatherHumidity: 'Humidity',
+    weatherLoading: 'Loading weather...',
+    weatherError: 'Weather is unavailable right now.',
+    weatherCredit: 'Data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>',
+    weatherClear: 'Clear sky',
+    weatherMostlyClear: 'Mostly clear',
+    weatherPartlyCloudy: 'Partly cloudy',
+    weatherOvercast: 'Overcast',
+    weatherFog: 'Fog',
+    weatherDrizzle: 'Drizzle',
+    weatherFreezingDrizzle: 'Freezing drizzle',
+    weatherRain: 'Rain',
+    weatherFreezingRain: 'Freezing rain',
+    weatherSnow: 'Snow',
+    weatherSnowGrains: 'Snow grains',
+    weatherShowers: 'Rain showers',
+    weatherSnowShowers: 'Snow showers',
+    weatherThunderstorm: 'Thunderstorm',
+    weatherThunderstormHail: 'Thunderstorm with hail',
+    weatherUnknown: 'Condition unavailable',
     addressTitle: 'Address',
     locationRegion: 'Marota village · Pindobaçu, Bahia, Brazil',
     coordinatesLabel: 'Coordinates',
@@ -140,7 +186,30 @@ const translations = {
     galleryComingSoon: 'Imagen próximamente',
     infoEyebrow: 'Información útil',
     infoTitle: 'Cómo encontrarnos',
-    infoDescription: 'Consulta la dirección y abre la ruta para llegar a la comunidad de Marota.',
+    infoDescription: 'Consulta la dirección, la ruta y el clima actual de la comunidad de Marota.',
+    weatherTitle: 'Clima actual',
+    weatherCity: 'Marota, Pindobaçu',
+    weatherFeels: 'Sensación',
+    weatherHumidity: 'Humedad',
+    weatherLoading: 'Consultando el clima...',
+    weatherError: 'No se pudo cargar el clima ahora.',
+    weatherCredit: 'Datos de <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>',
+    weatherClear: 'Cielo despejado',
+    weatherMostlyClear: 'Mayormente despejado',
+    weatherPartlyCloudy: 'Parcialmente nublado',
+    weatherOvercast: 'Nublado',
+    weatherFog: 'Niebla',
+    weatherDrizzle: 'Llovizna',
+    weatherFreezingDrizzle: 'Llovizna helada',
+    weatherRain: 'Lluvia',
+    weatherFreezingRain: 'Lluvia helada',
+    weatherSnow: 'Nieve',
+    weatherSnowGrains: 'Granos de nieve',
+    weatherShowers: 'Chubascos',
+    weatherSnowShowers: 'Chubascos de nieve',
+    weatherThunderstorm: 'Tormenta',
+    weatherThunderstormHail: 'Tormenta con granizo',
+    weatherUnknown: 'Condición no disponible',
     addressTitle: 'Dirección',
     locationRegion: 'Pueblo de Marota · Pindobaçu, Bahía, Brasil',
     coordinatesLabel: 'Coordenadas',
@@ -158,6 +227,94 @@ const translations = {
 };
 
 const langSelect = document.getElementById('langSelect');
+let currentWeatherCode = null;
+let weatherLoadState = 'loading';
+
+const weatherConditions = {
+  0: ['weatherClear', '☀️'],
+  1: ['weatherMostlyClear', '🌤️'],
+  2: ['weatherPartlyCloudy', '⛅'],
+  3: ['weatherOvercast', '☁️'],
+  45: ['weatherFog', '🌫️'],
+  48: ['weatherFog', '🌫️'],
+  51: ['weatherDrizzle', '🌦️'],
+  53: ['weatherDrizzle', '🌦️'],
+  55: ['weatherDrizzle', '🌧️'],
+  56: ['weatherFreezingDrizzle', '🌧️'],
+  57: ['weatherFreezingDrizzle', '🌧️'],
+  61: ['weatherRain', '🌧️'],
+  63: ['weatherRain', '🌧️'],
+  65: ['weatherRain', '🌧️'],
+  66: ['weatherFreezingRain', '🌧️'],
+  67: ['weatherFreezingRain', '🌧️'],
+  71: ['weatherSnow', '🌨️'],
+  73: ['weatherSnow', '🌨️'],
+  75: ['weatherSnow', '❄️'],
+  77: ['weatherSnowGrains', '❄️'],
+  80: ['weatherShowers', '🌦️'],
+  81: ['weatherShowers', '🌧️'],
+  82: ['weatherShowers', '⛈️'],
+  85: ['weatherSnowShowers', '🌨️'],
+  86: ['weatherSnowShowers', '🌨️'],
+  95: ['weatherThunderstorm', '⛈️'],
+  96: ['weatherThunderstormHail', '⛈️'],
+  99: ['weatherThunderstormHail', '⛈️'],
+};
+
+function renderWeatherStatus() {
+  const language = langSelect ? langSelect.value : 'pt';
+  const description = document.getElementById('weather-description');
+  const icon = document.getElementById('weather-icon');
+
+  if (weatherLoadState === 'loading') {
+    description.textContent = translations[language].weatherLoading;
+    return;
+  }
+  if (weatherLoadState === 'error') {
+    description.textContent = translations[language].weatherError;
+    return;
+  }
+
+  const [descriptionKey, emoji] = weatherConditions[currentWeatherCode] || ['weatherUnknown', '🌡️'];
+  description.textContent = translations[language][descriptionKey];
+  icon.textContent = emoji;
+}
+
+async function loadWeather() {
+  const params = new URLSearchParams({
+    latitude: '-10.7447334',
+    longitude: '-40.4473127',
+    current: 'temperature_2m,relative_humidity_2m,apparent_temperature,weather_code',
+    timezone: 'America/Sao_Paulo',
+  });
+
+  try {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+    if (!response.ok) throw new Error(`Weather request failed with status ${response.status}.`);
+
+    const data = await response.json();
+    const current = data.current;
+    if (!current || ![
+      current.temperature_2m,
+      current.relative_humidity_2m,
+      current.apparent_temperature,
+      current.weather_code,
+    ].every(Number.isFinite)) {
+      throw new Error('Weather response did not contain valid current conditions.');
+    }
+
+    document.getElementById('weather-temp').textContent = `${Math.round(current.temperature_2m)}°`;
+    document.getElementById('weather-feels').textContent = `${Math.round(current.apparent_temperature)}°`;
+    document.getElementById('weather-humidity').textContent = `${Math.round(current.relative_humidity_2m)}%`;
+    currentWeatherCode = current.weather_code;
+    weatherLoadState = 'loaded';
+  } catch (error) {
+    weatherLoadState = 'error';
+    console.error('Não foi possível carregar os dados do clima.', error);
+  }
+
+  renderWeatherStatus();
+}
 
 function applyLanguage(lang) {
   const data = translations[lang] || translations.pt;
@@ -172,6 +329,7 @@ function applyLanguage(lang) {
     if (data[key]) el.alt = data[key];
   });
   if (langSelect) langSelect.value = lang;
+  renderWeatherStatus();
   localStorage.setItem('siteLang', lang);
 }
 
@@ -181,6 +339,7 @@ if (langSelect) {
   langSelect.addEventListener('change', (e) => applyLanguage(e.target.value));
 }
 applyLanguage(savedLang);
+loadWeather();
 
 const copyAddressButton = document.getElementById('copyAddress');
 const copyAddressStatus = document.getElementById('copyAddressStatus');

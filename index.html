@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; block-all-mixed-content;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.open-meteo.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; block-all-mixed-content;" />
   <meta name="description" content="Marota - Um simples povoado no interior do nordeste da Bahia. Conheça Pindobaçu-BA." />
   <link rel="icon" type="image/x-icon" href="img/logomarota.ico">
   <link rel="icon" type="image/png" href="img/logomarota.png">
@@ -42,6 +42,27 @@
       </ul>
     </div>
   </header>
+
+  <div class="weather-widget" id="weather-widget" aria-labelledby="weather-title">
+    <div class="weather-top">
+      <span class="weather-icon" id="weather-icon" aria-hidden="true">⛅</span>
+      <div class="weather-summary">
+        <h2 id="weather-title" data-i18n="weatherTitle">Clima atual</h2>
+        <p class="weather-city" data-i18n="weatherCity">Marota, Pindobaçu</p>
+        <p id="weather-description" role="status" aria-live="polite">Consultando o clima...</p>
+      </div>
+      <strong id="weather-temp" class="weather-temp">--°</strong>
+    </div>
+
+    <div class="weather-details">
+      <span><span data-i18n="weatherFeels">Sensação</span>: <strong id="weather-feels">--°</strong></span>
+      <span><span data-i18n="weatherHumidity">Umidade</span>: <strong id="weather-humidity">--%</strong></span>
+    </div>
+
+    <small class="weather-credit" data-i18n="weatherCredit">
+      Dados por <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>
+    </small>
+  </div>
 
   <!-- ========= Hero ========= -->
   <section class="hero" id="hero">
@@ -178,7 +199,7 @@
       <div class="section-title reveal">
         <span class="eyebrow" data-i18n="infoEyebrow">Informações úteis</span>
         <h2 data-i18n="infoTitle">Como nos encontrar</h2>
-        <p data-i18n="infoDescription">Confira o endereço e abra a rota para chegar à comunidade de Marota.</p>
+        <p data-i18n="infoDescription">Confira o endereço, a rota e o clima atual da comunidade de Marota.</p>
       </div>
 
       <div class="info-grid">
